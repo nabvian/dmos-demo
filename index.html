@@ -23,6 +23,7 @@
       <a href="#seal">Seal</a>
       <a href="#failure">What failed</a>
       <a href="#status">Status</a>
+      <a href="#roadmap">Roadmap</a>
     </nav>
   </div>
 </header>
@@ -227,6 +228,24 @@
       <div class="decisions" id="decisions"></div>
       <p class="muted small">Source code is private, pre-validation. Open-source release is intended only after clinical validation: releasing an unvalidated medical knowledge system publicly would be a knowledge-safety failure. This page publishes recorded outputs, not code.</p>
     </div>
+  </div>
+</section>
+
+<section id="roadmap">
+  <div class="wrap">
+    <p class="eyebrow">Future upgrades · from the POC specification and result</p>
+    <h2>From proof of concept to a trained, validated system</h2>
+    <p class="section-copy">The POC proves the spine: typed stages, typed refusals, a sealed record. What stands between it and a trainable, validated system is listed below, in the order the work depends on itself. Each step drops into an interface or a config slot the POC already has.</p>
+    <ol class="roadmap">
+      <li class="road now"><span class="phase">In progress</span><b>Annotated training data</b><p>Ingest and validation of annotated smear images (<code>dmos.ingest</code>) is partly built and is the current work item.</p></li>
+      <li class="road"><span class="phase">Next</span><b>Sign the open decisions</b><p>Calibration validity, adequacy bar, retry cap, specimen versus slide and the rest of the list above. Each signed value fills a slot the pipeline already refuses to run without.</p></li>
+      <li class="road"><span class="phase">Next</span><b>Trained candidate selection</b><p>Replace the classical-CV stand-in at stage S2 with trained models behind the same interface. Swap the quality-score stand-in for a learned quality head.</p></li>
+      <li class="road"><span class="phase">Then</span><b>More observations on thin film</b><p>A white-cell differential and a platelet estimate, which depend on their own trained models and training data.</p></li>
+      <li class="road"><span class="phase">Then</span><b>Validation</b><p>A locked test set, a reproducibility study, an inter-observer comparison and independent review. Only then can accuracy, sensitivity or specificity be reported at all.</p></li>
+      <li class="road"><span class="phase">Then</span><b>Scale and speed</b><p>Performance work beyond the POC, which processes one field on one core in a few seconds per image.</p></li>
+      <li class="road"><span class="phase">After validation</span><b>Open-source release</b><p>The source is published once clinical validation is done; publishing an unvalidated medical knowledge system would be a knowledge-safety failure. Intended use and any regulatory work come after that evidence exists.</p></li>
+    </ol>
+    <p class="muted small">Out of scope by design, not by effort: thick-film parasite work. Thick films lyse the red cells this pipeline measures, so a thick film is refused, not attempted.</p>
   </div>
 </section>
 </main>
