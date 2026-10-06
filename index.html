@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DMOS — blood-smear findings that carry their own evidence</title>
+<meta name="description" content="DMOS turns one Wright–Giemsa blood-smear field into a typed, unit-carrying, provenance-sealed structural finding, and refuses in a typed way when the evidence is absent. Research prototype; not a medical device.">
+<meta property="og:title" content="DMOS — findings that carry their own evidence">
+<meta property="og:description" content="One blood-smear image in. A sealed structural finding, or a typed refusal naming the repair. Research prototype, not a medical device.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230f5f5c'/%3E%3Cellipse cx='16' cy='16' rx='9' ry='8' fill='%23e8a0a8'/%3E%3Cellipse cx='16' cy='16' rx='4' ry='3.5' fill='%23c7646f'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="notice-bar" role="note"><strong>Research prototype.</strong> Not a medical device, not clinically validated, no trained model. Structural descriptors only — no diagnosis. Do not use for clinical decisions.</div>
+<header class="topbar">
+  <div class="wrap topbar-inner">
+    <a class="brand" href="#top"><i aria-hidden="true"></i>DMOS</a>
+    <nav aria-label="Sections">
+      <a href="#pipeline">Pipeline</a>
+      <a href="#explorer">Refusal explorer</a>
+      <a href="#finding">A real finding</a>
+      <a href="#seal">Seal</a>
+      <a href="#failure">What failed</a>
+      <a href="#status">Status</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+<section class="hero" id="top">
+  <div class="wrap hero-grid">
+    <div>
+      <p class="eyebrow">Blood-smear structural findings · POC v0.1.0</p>
+      <h1>A finding that carries its own evidence, or a typed refusal</h1>
+      <p class="lede">One Wright–Giemsa thin-film field image goes in. What comes out is a <strong>structural finding</strong> — a typed, unit-carrying, provenance-sealed statement about red-cell morphology — together with an itemised record of everything the system <em>declined</em> to state, and why.</p>
+      <blockquote class="claim">The pipeline produces findings that carry their own evidence, and when the evidence is absent it refuses in a typed, machine-checkable way instead of emitting a number that looks the same as a supported one.</blockquote>
+      <div class="hero-actions">
+        <a class="button" href="#explorer">Try the refusal explorer</a>
+        <a class="button ghost" href="#finding">See a real finding</a>
+      </div>
+    </div>
+    <figure class="hero-figure">
+      <img src="img/overlay.jpg" alt="Synthetic thin-film field with twelve red cells outlined and numbered, a 10 micrometre scale bar, labelled 'demo track, no accuracy claim'." width="720" height="720">
+      <figcaption>Synthetic track: ground truth known by construction. Outlines are the measured objects; the scale bar exists only because a pixel scale was declared.</figcaption>
+    </figure>
+  </div>
+  <div class="wrap stats" id="stats"></div>
+</section>
+
+<section class="band" id="why">
+  <div class="wrap two-col">
+    <div>
+      <p class="eyebrow">Why refusals are the product</p>
+      <h2>A number that looks supported, but isn't</h2>
+      <p>A demo that segments cells and prints percentages proves nothing without ground truth: the numbers are unfalsifiable. A system that <strong>withholds</strong> a µm² figure because the pixel scale was never declared proves the architecture is load-bearing.</p>
+      <p>Every quantity is emitted as <code>Stated(value, unit, provenance)</code> and renders like <code>45 µm² [POC-S3]</code>. A test asserts no report line carries a number without a unit — and a companion test plants a bare number to prove that check can fail.</p>
+    </div>
+    <div>
+      <p class="eyebrow">Scope, declared and enforced</p>
+      <h2>Thin film only</h2>
+      <p>The POC answers one question on one preparation: red-cell morphology on a Wright–Giemsa <strong>thin film</strong>. The boundary is biological: a thick film lyses the erythrocytes on purpose to concentrate parasites, so red-cell morphology is <em>absent from the material</em>, not merely hard to see.</p>
+      <p>The preparation is a required declaration with no default, and is never inferred from the image. A thick film produces <code>F12_PREPARATION_NOT_APPLICABLE</code> before anything is measured — a report carrying no quantity at all.</p>
+    </div>
+  </div>
+</section>
+
+<section id="pipeline">
+  <div class="wrap">
+    <p class="eyebrow">Nine stages</p>
+    <h2>Each stage names the refusal it can emit</h2>
+    <p class="section-copy">Select a stage. Reportability resolves to one of four states rather than a boolean, because “we checked and it failed” and “nobody said what passing means” need different repairs.</p>
+    <div class="stages" id="stages" role="tablist" aria-label="Pipeline stages"></div>
+    <article class="stage-detail card" id="stage-detail" aria-live="polite"></article>
+  </div>
+</section>
+
+<section id="explorer" class="band">
+  <div class="wrap">
+    <p class="eyebrow">Interactive</p>
+    <h2>Refusal explorer</h2>
+    <p class="section-copy">Declare the inputs an operator would declare, then see which stage stops the run and why. The order of the gates follows the published specification; every message and report shown was <strong>recorded from a real run</strong> of the DMOS pipeline. The DMOS code itself does not run on this page.</p>
+    <div class="explorer">
+      <form class="card controls" id="explorer-form">
+        <fieldset><legend>Slide preparation</legend>
+          <label class="radio"><input type="radio" name="prep" value="THIN_FILM" checked> Thin film</label>
+          <label class="radio"><input type="radio" name="prep" value="THICK_FILM"> Thick film</label>
+        </fieldset>
+        <fieldset><legend>Image</legend>
+          <label class="check"><input type="checkbox" name="label_band"> Slide label / burned-in text visible</label>
+        </fieldset>
+        <fieldset><legend>Pixel scale (µm/px)</legend>
+          <label class="radio"><input type="radio" name="scale" value="declared" checked> Declared: 0.1475</label>
+          <label class="radio"><input type="radio" name="scale" value="blank"> Left blank</label>
+        </fieldset>
+        <fieldset><legend>How the scale was obtained</legend>
+          <select name="source" aria-label="Scale source">
+            <option value="STAGE_MICROMETER" selected>Stage micrometer</option>
+            <option value="GRATICULE">Eyepiece graticule</option>
+            <option value="VENDOR_DECLARATION_WITH_PROVENANCE">Vendor declaration with provenance</option>
+            <option value="NAMEPLATE_MAGNIFICATION">Objective nameplate magnification</option>
+          </select>
+        </fieldset>
+        <fieldset><legend>Calibration</legend>
+          <label class="radio"><input type="radio" name="when" value="in_date" checked> In date</label>
+          <label class="radio"><input type="radio" name="when" value="expired"> Past its validity interval</label>
+          <label class="check"><input type="checkbox" name="other_objective"> Image taken on a different objective (40×)</label>
+        </fieldset>
+        <fieldset><legend>Population</legend>
+          <label class="check"><input type="checkbox" name="off_vocab"> A label outside the declared vocabulary (“schistocyte”)</label>
+          <label class="check"><input type="checkbox" name="no_objects"> No assessable cells in the field</label>
+          <label>Adequacy bar (minimum assessable cells)
+            <select name="bar"><option value="">not declared</option><option value="5" selected>5</option><option value="500">500</option></select>
+          </label>
+        </fieldset>
+      </form>
+      <div class="explorer-out">
+        <ol class="trail" id="trail" aria-label="Stages reached"></ol>
+        <div class="verdict card" id="verdict" aria-live="polite"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="finding">
+  <div class="wrap">
+    <p class="eyebrow">Recorded output</p>
+    <h2>A real structural finding</h2>
+    <p class="section-copy">The full report the pipeline wrote for the synthetic field above, with every value from deterministic geometry. Note what it declines, and the refusal path left armed on purpose so it can be demonstrated.</p>
+    <div class="finding-grid">
+      <figure class="card figure-card">
+        <img src="img/overlay.jpg" alt="Overlay of the synthetic field with each measured object outlined and numbered." width="720" height="720" loading="lazy">
+        <figcaption>Overlay written by stage S8. Each object is outlined and labelled with its finding or its refusal code.</figcaption>
+      </figure>
+      <article class="card report" id="report-reported"></article>
+    </div>
+  </div>
+</section>
+
+<section id="states" class="band">
+  <div class="wrap">
+    <p class="eyebrow">Recorded output</p>
+    <h2>Four reportability states from one pipeline</h2>
+    <p class="section-copy">Same field, varying only what was declared. 0 of 0 is undefined, not 0%. Eight cells is adequate only if somebody declared a bar; there is no default adequacy.</p>
+    <div class="state-cards" id="state-cards"></div>
+  </div>
+</section>
+
+<section id="seal">
+  <div class="wrap two-col">
+    <div>
+      <p class="eyebrow">S7 · provenance seal</p>
+      <h2>Change one value, and the record says where</h2>
+      <p>Every stage appends an event to a hash-chained log, and the run is sealed. Appending after sealing raises: a record that can grow after attestation is not evidence. Changing a single payload value is detected and named.</p>
+      <button type="button" class="button" id="tamper-button">Alter one value in event 5</button>
+      <p class="muted small" id="tamper-note">Replays a recorded run: the denominator in one event was changed to 999 after sealing.</p>
+    </div>
+    <div class="chain card" id="chain" aria-live="polite"></div>
+  </div>
+</section>
+
+<section id="failure" class="band">
+  <div class="wrap">
+    <p class="eyebrow">Reported before the successes</p>
+    <h2>The result that failed, and the repair</h2>
+    <div class="two-col">
+      <div>
+        <p>The first quality score was <code>admitted / found</code>. Under a defocus sweep it stayed pinned at 1.00 while the reported mean area drifted by −3.05 µm² (−6.8%) — reported in full, at full confidence, with nothing marking it.</p>
+        <p>Uniform blur shrinks every object by about the same amount and fragments none, so nothing is rejected and the rejection rate never moves. A rejection-rate score sees heterogeneous failure and is blind to homogeneous bias — the more dangerous case.</p>
+        <p>The repair added acquisition sharpness, combined with the selection term by <strong>minimum</strong> rather than mean. The original negative finding is kept as a test, so a later “simplification” back to one term cannot look harmless.</p>
+      </div>
+      <div class="card">
+        <h3>Worst area error under each degradation</h3>
+        <div class="legend" aria-hidden="true"><span><i class="sw s2"></i>ordinary propagation</span><span><i class="sw s1"></i>evidence-gated</span></div>
+        <div id="chart-failure" class="chart"></div>
+        <details class="table-view"><summary>Table view</summary><div id="table-failure"></div></details>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="eg">
+  <div class="wrap two-col">
+    <div>
+      <p class="eyebrow">Cross-check against a second specification</p>
+      <h2>The EG bridge</h2>
+      <p>Seven DMOS evidence records were expressed in the vocabulary of EG (Evidence-Gated Multi-Scale) and routed through EG's own interpreter over its own normative YAML: <strong>5 permitted, 2 refused</strong>, with zero edits to EG.</p>
+      <ul class="plain">
+        <li><strong>Calibration cannot reach a population claim.</strong> Quality evidence moves freely from pixel to cell component, but pixel → population is forbidden.</li>
+        <li><strong>A single cell cannot decide the specimen.</strong> Cell → smear has no direct route, while the same climb one rung at a time is 4 of 4 permitted.</li>
+      </ul>
+      <p class="muted small">DMOS and EG share an author, so their agreement reflects consistency, not independent corroboration.</p>
+    </div>
+    <div>
+      <p class="eyebrow">Seven values with no defaults</p>
+      <h2>An absent value is a refusal, never a guess</h2>
+      <ol class="numbered">
+        <li><b>Pixel scale + optical configuration</b> — a property of this microscope at this objective.</li>
+        <li><b>Calibration validity interval</b> — inventing one invents the lab's cadence.</li>
+        <li><b>Component policy</b> — whether a fragmented object is refused or measured by its largest piece.</li>
+        <li><b>N:C convention</b> — more than one definition is in use.</li>
+        <li><b>Red-cell vocabulary</b> — a service may not name a category no upstream task produces.</li>
+        <li><b>Minimum assessable cells</b> — the clinical adequacy bar.</li>
+        <li><b>Expected populations + slides</b> — completeness needs a declaration of what should be there.</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<section id="status" class="band">
+  <div class="wrap two-col">
+    <div>
+      <p class="eyebrow">What this does not show</p>
+      <h2>Status, honestly</h2>
+      <ul class="plain">
+        <li>No accuracy, sensitivity, specificity or AUROC. No trained model contributes to any reported value; candidate selection is a classical-CV stand-in.</li>
+        <li>The synthetic track carries every correctness claim; the real track only illustrates the mechanism and makes no accuracy claim.</li>
+        <li>No clinical claim. Outputs are structural descriptors. Whether a residual area error matters is a judgment for whoever signs the open decisions.</li>
+        <li>The test counts below count contracts and refusals; not one measures model performance.</li>
+      </ul>
+      <div class="tests" id="tests"></div>
+    </div>
+    <div>
+      <p class="eyebrow">Open decisions blocking the next phase</p>
+      <h2>Unsigned, and visible</h2>
+      <p>The system refuses to run without these values rather than defaulting them, which is why the list is visible here instead of buried.</p>
+      <div class="decisions" id="decisions"></div>
+      <p class="muted small">Source code is private, pre-validation. Open-source release is intended only after clinical validation: releasing an unvalidated medical knowledge system publicly would be a knowledge-safety failure. This page publishes recorded outputs, not code.</p>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <p><strong>DMOS</strong> · © 2026 Koushik Das · All rights reserved · Research prototype, not a medical device.</p>
+    <p>Outputs on this page were recorded from the private DMOS POC v0.1.0 on its synthetic track, with illustrative configuration values marked as such. No patient data appears anywhere on this page.</p>
+  </div>
+</footer>
+<script type="module" src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,138 @@
+{
+ "scenarios": {
+  "reported": {
+   "declared": {
+    "preparation": "THIN_FILM",
+    "um_per_pixel": 0.1475,
+    "scale_source": "STAGE_MICROMETER"
+   },
+   "outcome": "REPORTED",
+   "code": null,
+   "stage": "S8 report",
+   "message": null,
+   "findings": 3,
+   "declined": 0,
+   "reportability": "NOT_ASSESSABLE",
+   "seal_intact": true,
+   "report_html": "<h1>DMOS structural finding, UPLOAD</h1>\n<p><strong>Run</strong> DMOS POC, synthetic track, illustrative values  \u00b7  <strong>Operator</strong> web demo visitor  \u00b7  <strong>Generated</strong> 2026-10-06T09:56:18.082692+00:00</p>\n<blockquote>\n<p>Structural descriptors only. No diagnosis, no classification into a disease\ncategory, and no interpretation. Nothing here is a clinical statement, and\nno claim is made about analytical accuracy.</p>\n<p><strong>No trained model contributed to any value in this report.</strong> Every number\nabove comes from deterministic geometry. A quality head has since been\ntrained, but it is not wired into this pipeline and scores no field here;\nit was trained without labels of any kind and cannot identify a disease,\nan organism or a cell type. Nothing in this system detects malaria or any\nother infection.</p>\n<p>Any clinical reading must come from a qualified professional with the\nactual slide.</p>\n</blockquote>\n<h2>Findings</h2>\n<table>\n<thead>\n<tr>\n<th>descriptor</th>\n<th>scope</th>\n<th>value</th>\n<th>state</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>objects admitted for measurement</td>\n<td>field</td>\n<td>12 objects [POC-S2]</td>\n<td>COUNTED</td>\n</tr>\n<tr>\n<td>mean admitted object area</td>\n<td>population</td>\n<td>45 \u00b5m\u00b2 [POC-S3]</td>\n<td>COMPUTED</td>\n</tr>\n<tr>\n<td>admitted object area range</td>\n<td>population</td>\n<td>0.218 \u00b5m\u00b2 [POC-S3]</td>\n<td>COMPUTED</td>\n</tr>\n</tbody>\n</table>\n<p><strong>Reportability:</strong> NOT_ASSESSABLE</p>\n<h2>Declined</h2>\n<table>\n<thead>\n<tr>\n<th>what</th>\n<th>scope</th>\n<th>code</th>\n<th>why</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>nc_ratio</td>\n<td>observation</td>\n<td><code>S4_ABSENT_GEOMETRY</code></td>\n<td>declared by the observation but its producing geometry was not available in this run</td>\n</tr>\n<tr>\n<td>nucleus-to-cytoplasm ratio</td>\n<td>object</td>\n<td><code>F5_CONVENTION_UNDECLARED</code></td>\n<td>no N:C convention is declared; the two conventions give materially different numbers for the same object, so a value here would not be interpretable</td>\n</tr>\n<tr>\n<td>red-cell morphology proportion</td>\n<td>population</td>\n<td><code>F7_F8_NOT_ASSESSABLE</code></td>\n<td>denominator is zero</td>\n</tr>\n</tbody>\n</table>\n<h2>Acquisition and calibration</h2>\n<ul>\n<li>Optical configuration: <code>100x oil/illustrative-camera/1.0x@1x</code></li>\n<li>Pixel scale: 0.147 \u00b5m/px [config]</li>\n<li>Source: <code>STAGE_MICROMETER</code>, measured from <code>visitor declaration, web demo</code></li>\n<li>Validity interval: 90 days [config]</li>\n</ul>\n<h2>Provenance</h2>\n<ul>\n<li>Sealed record: <code>a077ee60a6019ba8</code></li>\n<li>Events: 7 events [POC-S7]</li>\n<li>Retention basis: <code>POC demonstration, not clinical, retain 1 year</code></li>\n<li>Model bundle: <code>NONE. No model trained; deterministic selector only</code></li>\n</ul>\n<h2>Refusal paths armed by configuration</h2>\n<p>These are deliberate: a blank in the config provokes the named refusal so it can be demonstrated.</p>\n<ul>\n<li><code>F5_nc_convention_undeclared</code></li>\n</ul>"
+  },
+  "no_scale": {
+   "declared": {
+    "preparation": "THIN_FILM",
+    "um_per_pixel": null
+   },
+   "outcome": "REFUSED",
+   "code": "F1_NO_CALIBRATION_DECLARED",
+   "stage": "S1 calibration",
+   "message": null,
+   "findings": 0,
+   "declined": 0,
+   "reportability": null,
+   "seal_intact": null,
+   "report_html": "<h1>Structural finding, UPLOAD</h1>\n<p><strong>Track</strong> demo \u00b7 <strong>Outcome</strong> REFUSED \u00b7 <strong>Stage</strong> S1 calibration</p>\n<h2>Verdict</h2>\n<p><strong>No observation was made.</strong> This is not a negative result and not a\nmeasurement of zero. Nothing was measured.</p>\n<h2>Why</h2>\n<ul>\n<li>Code: <code>F1_NO_CALIBRATION_DECLARED</code></li>\n<li>No pixel scale was declared, so no micron quantity can be computed and no candidate object can be selected: the selector's size bounds are declared in um^2, a property of erythrocytes rather than of a camera, and converting them to px^2 requires um/pixel. Declaring a scale is the repair.</li>\n</ul>\n<h2>What was received</h2>\n<ul>\n<li>Slide preparation declared: <code>THIN_FILM</code></li>\n<li>Optical configuration: <code>100x oil/illustrative-camera/1.0x@1x</code></li>\n<li>Calibration source: <code>STAGE_MICROMETER</code></li>\n</ul>\n<h2>Findings</h2>\n<p><em>None. No quantity is stated anywhere in this document, so there is</em>\n<em>nothing here that could be read as a result.</em></p>\n<h2>Declined</h2>\n<ul>\n<li><code>OBS-RBC-SHAPE</code>, No pixel scale was declared, so no micron quantity can be computed and no candidate object can be selected: the selector's size bounds are declared in um^2, a property of erythrocytes rather than of a camera, and converting them to px^2 requires um/pixel. Declaring a scale is the repair.</li>\n</ul>\n<h2>What this report does not say</h2>\n<ul>\n<li>It does not say the specimen is normal or abnormal.</li>\n<li>It does not say no cells are present.</li>\n<li>It makes no clinical statement of any kind.</li>\n</ul>"
+  },
+  "nameplate": {
+   "declared": {
+    "preparation": "THIN_FILM",
+    "um_per_pixel": 0.1475,
+    "scale_source": "NAMEPLATE_MAGNIFICATION"
+   },
+   "outcome": "REFUSED",
+   "code": "F1_CALIBRATION_SOURCE_PROHIBITED",
+   "stage": "S1 calibration",
+   "message": null,
+   "findings": 0,
+   "declined": 0,
+   "reportability": null,
+   "seal_intact": null,
+   "report_html": "<h1>Structural finding, UPLOAD</h1>\n<p><strong>Track</strong> demo \u00b7 <strong>Outcome</strong> REFUSED \u00b7 <strong>Stage</strong> S1 calibration</p>\n<h2>Verdict</h2>\n<p><strong>No observation was made.</strong> This is not a negative result and not a\nmeasurement of zero. Nothing was measured.</p>\n<h2>Why</h2>\n<ul>\n<li>Code: <code>F1_CALIBRATION_SOURCE_PROHIBITED</code></li>\n<li>\u00a73.1 prohibits establishing pixel size from NAMEPLATE_MAGNIFICATION; use a certified stage micrometer or graticule</li>\n</ul>\n<h2>What was received</h2>\n<ul>\n<li>Slide preparation declared: <code>THIN_FILM</code></li>\n<li>Optical configuration: <code>100x oil/illustrative-camera/1.0x@1x</code></li>\n<li>Calibration source: <code>NAMEPLATE_MAGNIFICATION</code></li>\n</ul>\n<h2>Findings</h2>\n<p><em>None. No quantity is stated anywhere in this document, so there is</em>\n<em>nothing here that could be read as a result.</em></p>\n<h2>Declined</h2>\n<ul>\n<li><code>OBS-RBC-SHAPE</code>, \u00a73.1 prohibits establishing pixel size from NAMEPLATE_MAGNIFICATION; use a certified stage micrometer or graticule</li>\n</ul>\n<h2>What this report does not say</h2>\n<ul>\n<li>It does not say the specimen is normal or abnormal.</li>\n<li>It does not say no cells are present.</li>\n<li>It makes no clinical statement of any kind.</li>\n</ul>"
+  },
+  "thick_film": {
+   "declared": {
+    "preparation": "THICK_FILM",
+    "um_per_pixel": 0.1475
+   },
+   "outcome": "REFUSED",
+   "code": "F12_PREPARATION_NOT_APPLICABLE",
+   "stage": "S0a preparation",
+   "message": null,
+   "findings": 0,
+   "declined": 0,
+   "reportability": null,
+   "seal_intact": null,
+   "report_html": "<h1>Structural finding, UPLOAD</h1>\n<p><strong>Track</strong> demo \u00b7 <strong>Outcome</strong> REFUSED \u00b7 <strong>Stage</strong> S0a preparation</p>\n<h2>Verdict</h2>\n<p><strong>No observation was made.</strong> This is not a negative result and not a\nmeasurement of zero. Nothing was measured.</p>\n<h2>Why</h2>\n<ul>\n<li>Code: <code>F12_PREPARATION_NOT_APPLICABLE</code></li>\n<li>OBS-RBC-SHAPE is declared for THIN_FILM and the slide is a THICK_FILM, so this observation is not assessable on this preparation. The thick-film preparation lyses the erythrocytes, so red-cell morphology is absent from the material rather than merely hard to see. Repair: prepare and image a thin film.</li>\n</ul>\n<h2>What was received</h2>\n<ul>\n<li>Slide preparation declared: <code>THICK_FILM</code></li>\n<li>Optical configuration: <code>100x oil/illustrative-camera/1.0x@1x</code></li>\n<li>Calibration source: <code>STAGE_MICROMETER</code></li>\n</ul>\n<h2>Findings</h2>\n<p><em>None. No quantity is stated anywhere in this document, so there is</em>\n<em>nothing here that could be read as a result.</em></p>\n<h2>Declined</h2>\n<ul>\n<li><code>OBS-RBC-SHAPE</code>, OBS-RBC-SHAPE is declared for THIN_FILM and the slide is a THICK_FILM, so this observation is not assessable on this preparation. The thick-film preparation lyses the erythrocytes, so red-cell morphology is absent from the material rather than merely hard to see. Repair: prepare and image a thin film.</li>\n</ul>\n<h2>What this report does not say</h2>\n<ul>\n<li>It does not say the specimen is normal or abnormal.</li>\n<li>It does not say no cells are present.</li>\n<li>It makes no clinical statement of any kind.</li>\n</ul>"
+  }
+ },
+ "reportability": [
+  {
+   "scenario": "bar undeclared",
+   "n": 8,
+   "bar": null,
+   "state": "UNDETERMINED",
+   "reasons": [
+    "no minimum denominator declared for rbc; 8 cells assessed but the bar is unset (\u00a75)"
+   ]
+  },
+  {
+   "scenario": "bar = 5, met",
+   "n": 8,
+   "bar": 5,
+   "state": "REPORTABLE",
+   "reasons": []
+  },
+  {
+   "scenario": "bar = 500, unmet",
+   "n": 8,
+   "bar": 500,
+   "state": "NOT_REPORTABLE",
+   "reasons": [
+    "8 assessed, 500 required"
+   ]
+  },
+  {
+   "scenario": "no objects",
+   "n": 0,
+   "bar": 5,
+   "state": "NOT_ASSESSABLE",
+   "reasons": [
+    "denominator is zero"
+   ]
+  }
+ ],
+ "off_vocabulary": {
+  "refused": true,
+  "refusal": "'schistocyte' is not in the upstream vocabulary ['normocyte', 'microcyte', 'macrocyte']; a service never introduces a new claim (ARCHITECTURE \u00a72)",
+  "aggregate": null
+ },
+ "f9": {
+  "refused": true,
+  "code": "F9_BURNED_IN_IDENTIFIER",
+  "stage": "S0 intake",
+  "message": "image F-text rejected at ingest: pixel-level text detected"
+ },
+ "calibration": {
+  "expired": {
+   "state": "NOT_ASSESSABLE",
+   "reasons": [
+    "calibration expired at 2026-12-17T09:00:00+00:00 (validity 90 d) (\u00a73.5)"
+   ]
+  },
+  "other_objective": {
+   "state": "NOT_ASSESSABLE",
+   "reasons": [
+    "calibration is scoped to optical configuration 100x oil/illustrative-camera/1.0x@1x but the image was acquired on 40x/illustrative-camera/1.0x@1x (\u00a73.2)"
+   ]
+  }
+ },
+ "tamper": {
+  "events": 6,
+  "verifies_before": true,
+  "mutated_event_index": 4,
+  "mutation": "denominator -> 999",
+  "finding": "TamperFinding(seq=5, expected_hash='8747a1c2f40af148c31bdea64f0836489e5c42201ea1da63f923ab880bf0a60b', found_hash='1abfd0d3523de229d790643eeb4e7308f176496d7adf0e7b79bf0598ad4bb35c', detail='chain break at event 5: predecessor hash differs')"
+ },
+ "notes": {
+  "recorded_with": "DMOS POC v0.1.0 (private), synthetic track, illustrative config values marked as such",
+  "date": "2026-10-06"
+ }
+}
